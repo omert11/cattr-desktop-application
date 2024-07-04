@@ -36,9 +36,11 @@ module.exports = async params => {
   log('notarizing %s found at %s', appId, appPath);
   log('take your seats, this might take a while (usually up to 15 minutes)');
   await electronNotarize.notarize({
+    tool: 'notarytool',
     appPath,
     appBundleId: appId,
     appleApiKey: process.env.APPLE_API_KEY,
+    appleApiKeyId: process.env.APPLE_API_KEY_ID,
     appleApiIssuer: process.env.APPLE_API_ISSUER,
   });
   log('notarization... um.. completed');
