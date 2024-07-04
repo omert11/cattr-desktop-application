@@ -14,27 +14,24 @@ class OsInactivityHandler {
 
     this._macInactivityNotify = null;
 
-    app.on('ready', () => {
+    setInterval(() => {
 
-      setInterval(() => {
+      if (!tracker.active && userPreferences.get('forceFocusOnInactive')) {
 
-        if (!tracker.active && userPreferences.get('forceFocusOnInactive')) {
+        osIntegration.windowFocus();
+        osIntegration.window.flashFrame(true);
+        osIntegration.window.setAlwaysOnTop(true, 'screen-saver');
+        osIntegration.window.setSkipTaskbar(true);
 
-          osIntegration.windowFocus();
-          osIntegration.window.flashFrame(true);
-          osIntegration.window.setAlwaysOnTop(true, 'screen-saver');
-          osIntegration.window.setSkipTaskbar(true);
+      } else if (tracker.active) {
 
-        } else if (tracker.active) {
+        osIntegration.window.setAlwaysOnTop(false, 'screen-saver');
+        osIntegration.window.setSkipTaskbar(false);
 
-          osIntegration.window.setAlwaysOnTop(false, 'screen-saver');
-          osIntegration.window.setSkipTaskbar(false);
+      }
 
-        }
+    }, 1000);
 
-      }, 1000);
-
-    });
     tracker.on('activity-proof-request', () => {
 
       this._inactivityResultAccepted = false;
