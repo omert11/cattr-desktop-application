@@ -2,6 +2,7 @@ const { app, Notification } = require('electron');
 const tracker = require('../base/task-tracker');
 const osIntegration = require('../base/os-integration');
 const translation = require('../base/translation');
+const userPreferences = require('../base/user-preferences');
 
 class OsInactivityHandler {
 
@@ -12,6 +13,17 @@ class OsInactivityHandler {
     this._macBounceId = null;
 
     this._macInactivityNotify = null;
+
+    setInterval(() => {
+
+      if (!tracker.active && userPreferences.get('forceFocusOnInactive')) {
+
+        osIntegration.windowFocus();
+        osIntegration.window.flashFrame(true);
+
+      }
+
+    }, 1000);
 
     tracker.on('activity-proof-request', () => {
 

@@ -62,6 +62,18 @@ const preferences = {
       options: { min: 0 },
     },
   },
+  // Preferences entry for continuous focus on the window during inactive time
+  forceFocusOnInactive: {
+    type: 'boolean',
+    name: 'Force focus on the window',
+    description: 'Should we keep the window focused during inactive time?',
+    default: false,
+    frontend: {
+      element: 'toggle',
+      options: { No: false, Yes: true },
+    },
+  },
+
 
   // Preferences entry for the inactive tasks display
   showInactiveTasks: {
